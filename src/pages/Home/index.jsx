@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import { Card, Container,InputSearchContainer,Header, ListContainer } from "./styles"
 import { FiArrowUp, FiTrash2, FiEdit } from "react-icons/fi"
 
@@ -9,7 +10,7 @@ export function Home(){
         </InputSearchContainer>
         <Header>
           <strong>3 Contatos</strong>
-          <a href=""> Novo Contato </a>
+          <Link to="/new"> Novo Contato </Link>
         </Header>
 
         <ListContainer>
