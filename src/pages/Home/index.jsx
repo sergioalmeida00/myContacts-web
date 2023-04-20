@@ -31,8 +31,12 @@ export function Home(){
               <span>(79) 99999-9999</span>
             </div>
             <div className="actions">
-              <a href="/"> <FiEdit/> </a>
-              <button>  <FiTrash2/> </button>
+              <Link to="/edit/123">
+                 <FiEdit/>
+              </Link>
+              <button>
+                 <FiTrash2/>
+              </button>
             </div>
           </Card>
         </ListContainer>
