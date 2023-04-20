@@ -1,5 +1,6 @@
 export default{
   backgroundColor: "#F6F5FC",
+  backgroundPurple:"#E0E3FF",
   COLOR:{
     white:"#fff",
 

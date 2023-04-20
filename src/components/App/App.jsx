@@ -4,7 +4,7 @@ import GlobalStyles from '../../assets/styles/global';
 import defaultTheme from '../../assets/styles/themes/default';
 import { Container } from './style';
 import { Header } from '../Header';
-import { ContactsList } from '../ContactsList';
+import { Route } from '../../routes';
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <GlobalStyles />
       <Container>
         <Header/>
-        <ContactsList/>
+        <Route/>
       </Container>
     </ThemeProvider>
   );
