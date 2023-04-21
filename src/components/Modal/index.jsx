@@ -1,9 +1,9 @@
 import { Container, Overlay,Footer } from "./styles";
 import { Button } from "../Button"
-export function Modal(){
+export function Modal({danger}){
   return (
     <Overlay>
-      <Container>
+      <Container danger={danger}>
         <h1>Titulo do Modal</h1>
         <p>Corpo do Modal</p>
 
@@ -11,7 +11,7 @@ export function Modal(){
           <button type="button" className="cancel-button">
             Cancelar
           </button>
-          <Button type="button">
+          <Button type="button" danger={danger}>
             Deletar
           </Button>
         </Footer>

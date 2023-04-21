@@ -24,8 +24,9 @@ export const Container = styled.div`
   >h1{
     font-size: 1.4rem;
     margin-bottom: 0.8rem;
-  }
 
+    color: ${({theme,danger}) => (danger ? theme.COLOR.danger[300] : theme.COLOR.gray_900 )};
+  }
 `
 
 export const Footer = styled.footer`

@@ -6,7 +6,7 @@ export const Button = styled.button`
   height: 3.25rem;
   border: none;
   border-radius: 4px;
-  background: ${({theme}) => theme.COLOR.purple_400};
+  background: ${({theme,danger}) => ( danger ? theme.COLOR.danger[300] :theme.COLOR.purple_400 )};
   color: ${({theme}) => theme.COLOR.white};
   font-weight: bold;
   font-size: 1rem;
