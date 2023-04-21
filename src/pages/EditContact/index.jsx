@@ -1,5 +1,6 @@
 import { PageHeader } from "../../components/PageHeader";
 import { ContactForm } from "../../components/ContactForm";
+import { Loader } from "../../components/Loader";
 
 export function EditContact(){
   return (

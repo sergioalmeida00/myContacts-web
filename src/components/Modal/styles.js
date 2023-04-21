@@ -25,7 +25,7 @@ export const Container = styled.div`
     font-size: 1.4rem;
     margin-bottom: 0.8rem;
 
-    color: ${({theme,danger}) => (danger ? theme.COLOR.danger[300] : theme.COLOR.gray_900 )};
+    color: ${({theme,danger}) => (danger ? theme.COLOR.danger[300] : theme.COLOR.gray[900] )};
   }
 `
 
@@ -40,7 +40,7 @@ export const Footer = styled.footer`
     background: transparent;
     border: none;
     font-size: 1rem;
-    color: ${({theme}) => theme.COLOR.gray_200};
+    color: ${({theme}) => theme.COLOR.gray[200]};
     transition: all 0.2s ease-in;
 
     &:hover{

@@ -6,7 +6,6 @@ import { Modal } from "../../components/Modal"
 export function Home(){
   return(
       <Container>
-        <Modal danger />
         <InputSearchContainer>
           <input type="text" placeholder="Pesquisar contato..."/>
         </InputSearchContainer>

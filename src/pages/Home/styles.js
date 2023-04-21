@@ -16,7 +16,7 @@ export const InputSearchContainer = styled.div`
     outline: 0;
 
     &::placeholder{
-      color: ${({theme}) => theme.COLOR.gray_200};
+      color: ${({theme}) => theme.COLOR.gray[200]};
     }
   }
 `
@@ -43,7 +43,7 @@ export const Header = styled.header`
 
   >strong{
     font-size: 1.5rem;
-    color: ${({theme}) => theme.COLOR.gray_900};
+    color: ${({theme}) => theme.COLOR.gray[800]};
   }
 `
 
@@ -90,7 +90,7 @@ export const Card = styled.div`
     gap: 0.25rem;
 
     >span{
-      color: ${({theme}) => theme.COLOR.gray_200};
+      color: ${({theme}) => theme.COLOR.gray[200]};
       font-size: 0.875rem;
     }
   }
@@ -100,7 +100,7 @@ export const Card = styled.div`
       gap: 0.875rem;
 
       >strong{
-        color: ${({theme}) => theme.COLOR.gray_900};
+        color: ${({theme}) => theme.COLOR.gray[900]};
       }
       >small{
         font-size: 0.75rem;
