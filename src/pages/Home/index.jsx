@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom"
 import { Card, Container,InputSearchContainer,Header, ListContainer } from "./styles"
 import { FiArrowUp, FiTrash2, FiEdit } from "react-icons/fi"
+import { Modal } from "../../components/Modal"
 
 export function Home(){
   return(
       <Container>
+        <Modal/>
         <InputSearchContainer>
           <input type="text" placeholder="Pesquisar contato..."/>
         </InputSearchContainer>
