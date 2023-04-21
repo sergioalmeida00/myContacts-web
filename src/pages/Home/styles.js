@@ -130,7 +130,7 @@ export const Card = styled.div`
       border: none;
       background: transparent;
       font-size: 1.5rem;
-      color: red;
+      color: ${({theme}) => theme.COLOR.danger[300]};
       transition: all 0.2s ease-in;
 
       &:hover{
