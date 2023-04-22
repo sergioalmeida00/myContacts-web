@@ -4,6 +4,8 @@ import { Input } from "../Input"
 import { Select } from "../Select"
 import { Button } from "../Button"
 import { useState } from "react"
+import { isEmailValid } from "../../utils/isEmailValid"
+
 
 export function ContactForm({buttonLabel}){
   const [name,setName] = useState('')
@@ -22,6 +24,27 @@ export function ContactForm({buttonLabel}){
     }else{
       setErrors((prevState) => prevState.filter(
         (error) => error.field !== 'name'
+      ))
+    }
+  }
+
+  function handleEmailChange(event){
+    setEmail(event.target.value)
+
+    if(event.target.value && !isEmailValid(event.target.value)){
+      const errorAlreadyExists = errors.find((error) => error.field === 'email')
+      if(errorAlreadyExists){
+        return
+      }
+
+      setErrors((prevState) => [
+        ...prevState,
+        {field:'email', message:'E-mail invalido'}
+      ])
+
+    }else{
+      setErrors((prevState) => prevState.filter(
+        (error) => error.field !== 'email'
       ))
     }
   }
@@ -47,7 +70,7 @@ export function ContactForm({buttonLabel}){
           type="email"
           placeholder="E-mail"
           valeu={email}
-          onChange={(event) => setEmail(event.target.value)}
+          onChange={handleEmailChange}
         />
       </FormGroup>
 
