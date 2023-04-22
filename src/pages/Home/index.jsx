@@ -25,7 +25,7 @@ export function Home(){
           <Card>
             <div className="info">
               <div className="contact-name">
-                <strong>Sérgio ALmeida</strong>
+                <strong>Sérgio Almeida</strong>
                 <small>instagram</small>
               </div>
               <span>sergioalmeida00@gmail.com</span>
