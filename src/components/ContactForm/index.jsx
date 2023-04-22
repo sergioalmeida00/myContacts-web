@@ -6,6 +6,7 @@ import { Button } from "../Button"
 import { useState } from "react"
 import { isEmailValid } from "../../utils/isEmailValid"
 import { useErrors } from "../../hooks/useErrors"
+import { formatPhone } from "../../utils/formatPhone"
 
 
 export function ContactForm({buttonLabel}){
@@ -34,10 +35,16 @@ export function ContactForm({buttonLabel}){
     }
   }
 
+  function handlePhoneChange(event){
+
+    setPhone(formatPhone(event.target.value))
+  }
+
   function handleSubmit(event){
     event.preventDefault()
     console.log({name, email,phone,category})
   }
+
 
   return(
     <Form onSubmit={handleSubmit} noValidate>
@@ -63,10 +70,10 @@ export function ContactForm({buttonLabel}){
 
       <FormGroup>
         <Input
-           type="text"
            placeholder="Telefone"
-           valeu={phone}
-           onChange={(event) => setPhone(event.target.value)}
+           value={phone}
+           onChange={handlePhoneChange}
+           maxLength="15"
         />
       </FormGroup>
 
