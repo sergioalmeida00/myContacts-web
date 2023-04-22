@@ -49,6 +49,10 @@ export function ContactForm({buttonLabel}){
     }
   }
 
+  function getErrorMessageByFieldName(fieldName){
+    return errors.find((error) => error.field === fieldName)?.message
+  }
+
   function handleSubmit(event){
     event.preventDefault()
     console.log({name, email,phone,category})
@@ -56,21 +60,23 @@ export function ContactForm({buttonLabel}){
 
   return(
     <Form onSubmit={handleSubmit}>
-      <FormGroup>
+      <FormGroup error={getErrorMessageByFieldName('name')}>
         <Input
           type="text"
           placeholder="Nome"
           valeu={name}
           onChange={handleNameChange}
+          error={getErrorMessageByFieldName('name')}
         />
       </FormGroup>
 
-      <FormGroup >
+      <FormGroup error={getErrorMessageByFieldName('email')} >
         <Input
           type="email"
           placeholder="E-mail"
           valeu={email}
           onChange={handleEmailChange}
+          error={getErrorMessageByFieldName('email')}
         />
       </FormGroup>
 
