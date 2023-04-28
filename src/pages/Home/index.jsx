@@ -2,8 +2,22 @@ import { Link } from "react-router-dom"
 import { Card, Container,InputSearchContainer,Header, ListContainer } from "./styles"
 import { FiArrowUp, FiTrash2, FiEdit } from "react-icons/fi"
 import { Modal } from "../../components/Modal"
+import { useEffect, useState } from "react"
 
 export function Home(){
+  const [contacts,setContacts] = useState([]);
+  useEffect(() => {
+    fetch('http://localhost:3001/contacts')
+    .then(async (response) => {
+        const json = await response.json()
+        setContacts(json)
+    })
+    .catch((error) => {
+      console.log('erro',error )
+    })
+  }, [])
+  console.log(contacts)
+
   return(
       <Container>
         <InputSearchContainer>
@@ -45,10 +59,4 @@ export function Home(){
     )
 }
 
-fetch('http://localhost:3001/categories')
-  .then((response) => {
-    console.log('response', response)
-  })
-  .catch((error) => {
-    console.log('erro',error )
-  })
+
