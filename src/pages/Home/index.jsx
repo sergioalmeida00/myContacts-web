@@ -10,21 +10,22 @@ export function Home(){
     fetch('http://localhost:3001/contacts')
     .then(async (response) => {
         const json = await response.json()
-        setContacts(json)
+        setContacts(json.contacts)
     })
     .catch((error) => {
       console.log('erro',error )
     })
   }, [])
-  console.log(contacts)
-
   return(
       <Container>
         <InputSearchContainer>
           <input type="text" placeholder="Pesquisar contato..."/>
         </InputSearchContainer>
         <Header>
-          <strong>3 Contatos</strong>
+          <strong>
+            {contacts.length}
+            { contacts.length === 1  ?  ' Contato' : ' Contatos' }
+          </strong>
           <Link to="/new"> Novo Contato </Link>
         </Header>
 
@@ -36,24 +37,27 @@ export function Home(){
             </button>
           </header>
 
-          <Card>
-            <div className="info">
-              <div className="contact-name">
-                <strong>Sérgio Almeida</strong>
-                <small>instagram</small>
+          {contacts.map((contact) => (
+            <Card key={contact.id}>
+              <div className="info">
+                <div className="contact-name">
+                  <strong> {contact.name} </strong>
+                  {contact.title && <small> {contact.title} </small>}
+                </div>
+                <span> {contact.email} </span>
+                <span> {contact.phone} </span>
               </div>
-              <span>sergioalmeida00@gmail.com</span>
-              <span>(79) 99999-9999</span>
-            </div>
-            <div className="actions">
-              <Link to="/edit/123">
-                 <FiEdit/>
-              </Link>
-              <button>
-                 <FiTrash2/>
-              </button>
-            </div>
-          </Card>
+              <div className="actions">
+                <Link to={ `/edit/${contact.id}` }>
+                  <FiEdit/>
+                </Link>
+                <button>
+                  <FiTrash2/>
+                </button>
+              </div>
+            </Card>
+          ))}
+
         </ListContainer>
       </Container>
     )
