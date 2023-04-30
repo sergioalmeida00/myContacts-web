@@ -65,8 +65,12 @@ export const ListContainer = styled.div`
       transition: all 0.2s ease-in;
 
       &:hover{
-      filter: brightness(0.8);
+       filter: brightness(0.8);
+      }
     }
+    svg{
+      transform: ${({ orderBy }) => ( orderBy === 'ASC' ? 'rotate(180deg)' : 'rotate(0deg)' )};
+      transition: transform 0.3s ease-in;
     }
   }
 `

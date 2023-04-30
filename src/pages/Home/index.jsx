@@ -6,8 +6,10 @@ import { useEffect, useState } from "react"
 
 export function Home(){
   const [contacts,setContacts] = useState([]);
+  const [orderBy, setOrderBy] = useState('ASC');
+
   useEffect(() => {
-    fetch('http://localhost:3001/contacts')
+    fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
     .then(async (response) => {
         const json = await response.json()
         setContacts(json.contacts)
@@ -15,7 +17,16 @@ export function Home(){
     .catch((error) => {
       console.log('erro',error )
     })
-  }, [])
+  }, [orderBy])
+
+  function handleToggleOrderBy(){
+    setOrderBy(
+      (prevState) =>  ( prevState === 'ASC' ? 'DESC' : 'ASC' )
+    )
+  }
+
+  console.log(contacts)
+
   return(
       <Container>
         <InputSearchContainer>
@@ -29,9 +40,13 @@ export function Home(){
           <Link to="/new"> Novo Contato </Link>
         </Header>
 
-        <ListContainer>
+        <ListContainer orderBy={orderBy}>
           <header>
-            <button type="button" className="sort-button">
+            <button
+              onClick={handleToggleOrderBy}
+              type="button"
+              className="sort-button"
+             >
               <span>Nome</span>
               <FiArrowUp/>
             </button>
