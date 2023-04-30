@@ -7,6 +7,11 @@ import { useEffect, useState } from "react"
 export function Home(){
   const [contacts,setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('ASC');
+  const [searchContatcts, setSearchContatcts] = useState('');
+
+  const filteredContacts = contacts.filter(( conatct ) => (
+    conatct.name.toLowerCase().includes(searchContatcts.toLowerCase())
+  ))
 
   useEffect(() => {
     fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
@@ -24,18 +29,23 @@ export function Home(){
       (prevState) =>  ( prevState === 'ASC' ? 'DESC' : 'ASC' )
     )
   }
-
-  console.log(contacts)
+  function handleSearchContacts(event){
+    setSearchContatcts( event.target.value )
+  }
 
   return(
       <Container>
         <InputSearchContainer>
-          <input type="text" placeholder="Pesquisar contato..."/>
+          <input
+            onChange={handleSearchContacts}
+            type="text"
+            placeholder="Pesquisar contato..."
+          />
         </InputSearchContainer>
         <Header>
           <strong>
-            {contacts.length}
-            { contacts.length === 1  ?  ' Contato' : ' Contatos' }
+            {filteredContacts.length}
+            { filteredContacts.length === 1  ?  ' Contato' : ' Contatos' }
           </strong>
           <Link to="/new"> Novo Contato </Link>
         </Header>
@@ -52,7 +62,7 @@ export function Home(){
             </button>
           </header>
 
-          {contacts.map((contact) => (
+          {filteredContacts.map((contact) => (
             <Card key={contact.id}>
               <div className="info">
                 <div className="contact-name">
