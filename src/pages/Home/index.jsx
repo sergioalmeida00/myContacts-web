@@ -2,25 +2,37 @@ import { Link } from "react-router-dom"
 import { Card, Container,InputSearchContainer,Header, ListContainer } from "./styles"
 import { FiArrowUp, FiTrash2, FiEdit } from "react-icons/fi"
 import { Modal } from "../../components/Modal"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { Loader } from "../../components/Loader"
+import { delay } from "../../utils/delay"
 
 export function Home(){
   const [contacts,setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('ASC');
   const [searchContatcts, setSearchContatcts] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filteredContacts = contacts.filter(( conatct ) => (
-    conatct.name.toLowerCase().includes(searchContatcts.toLowerCase())
-  ))
 
+  const filteredContacts = useMemo(() => {
+   return contacts.filter(( contact ) => (
+    contact.name.toLowerCase().includes(searchContatcts.toLowerCase())
+    ))
+  },[contacts,searchContatcts])
+
+console.log("Renderizou")
   useEffect(() => {
+    setIsLoading(true);
     fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
     .then(async (response) => {
-        const json = await response.json()
-        setContacts(json.contacts)
+        await delay(500)
+        const {contacts} = await response.json()
+        setContacts(contacts)
     })
     .catch((error) => {
       console.log('erro',error )
+    })
+    .finally(() => {
+      setIsLoading(false)
     })
   }, [orderBy])
 
@@ -35,6 +47,8 @@ export function Home(){
 
   return(
       <Container>
+        <Loader isLoading={isLoading} />
+
         <InputSearchContainer>
           <input
             onChange={handleSearchContacts}
