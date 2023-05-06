@@ -4,7 +4,7 @@ import { FiArrowUp, FiTrash2, FiEdit } from "react-icons/fi"
 import { Modal } from "../../components/Modal"
 import { useEffect, useMemo, useState } from "react"
 import { Loader } from "../../components/Loader"
-import { delay } from "../../utils/delay"
+import ContactsService from "../../services/ContactsService"
 
 export function Home(){
   const [contacts,setContacts] = useState([]);
@@ -19,21 +19,21 @@ export function Home(){
     ))
   },[contacts,searchContatcts])
 
-console.log("Renderizou")
   useEffect(() => {
-    setIsLoading(true);
-    fetch(`http://localhost:3001/contacts?orderBy=${orderBy}`)
-    .then(async (response) => {
-        await delay(500)
-        const {contacts} = await response.json()
-        setContacts(contacts)
-    })
-    .catch((error) => {
-      console.log('erro',error )
-    })
-    .finally(() => {
-      setIsLoading(false)
-    })
+    async function loadContacts(){
+      try {
+        setIsLoading(true);
+        const contactsListService = await ContactsService.loadContacts(orderBy)
+        setContacts(contactsListService)
+
+      } catch (error) {
+        console.log('error', error)
+      }
+      finally{
+        setIsLoading(false)
+      }
+    }
+    loadContacts()
   }, [orderBy])
 
   function handleToggleOrderBy(){
