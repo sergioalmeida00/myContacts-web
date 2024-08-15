@@ -1,98 +1,114 @@
-import { Form,ButtonContainer } from "./styles"
-import { FormGroup } from "../FormGroup"
-import { Input } from "../Input"
-import { Select } from "../Select"
-import { Button } from "../Button"
-import { useState } from "react"
-import { isEmailValid } from "../../utils/isEmailValid"
-import { useErrors } from "../../hooks/useErrors"
-import { formatPhone } from "../../utils/formatPhone"
+import { Form, ButtonContainer } from "./styles";
+import { FormGroup } from "../FormGroup";
+import { Input } from "../Input";
+import { Select } from "../Select";
+import { Button } from "../Button";
+import { useState } from "react";
+import { isEmailValid } from "../../utils/isEmailValid";
+import { useErrors } from "../../hooks/useErrors";
+import { formatPhone } from "../../utils/formatPhone";
+import { useCategories } from "../../hooks/useCategories";
 
+export function ContactForm({ buttonLabel }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [category, setCategory] = useState("");
+  const { setError, removeError, getErrorMessageByFieldName, errors } =
+    useErrors();
+  const { categories,isLoadingCategories } = useCategories();
 
-export function ContactForm({buttonLabel}){
-  const [name,setName] = useState('')
-  const [email,setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [category, setCategory] = useState('')
-  const {setError, removeError, getErrorMessageByFieldName,errors } = useErrors()
+  const isFormValid = name && category && errors.length === 0;
 
-  const isFormValid = (name && errors.length === 0)
+  function handleNameChange(event) {
+    setName(event.target.value);
+    if (!event.target.value) {
+      setError({ field: "name", message: "Nome é Obrigatório" });
+    } else {
+      removeError("name");
+    }
+  }
 
-  function handleNameChange(event){
-    setName(event.target.value)
+  function handleCategory(event){
+    setCategory(event.target.value);
     if(!event.target.value){
-      setError({field:'name', message:'Nome é Obrigatório'})
+      setError({ field: "category", message: "Categoria é Obrigatório" });
     }else{
-      removeError('name')
+      removeError("category");
     }
   }
 
-  function handleEmailChange(event){
-    setEmail(event.target.value)
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
 
-    if(event.target.value && !isEmailValid(event.target.value)){
-      setError({field:'email', message:'E-mail invalido..'})
-    }else{
-      removeError('email')
+    if (event.target.value && !isEmailValid(event.target.value)) {
+      setError({ field: "email", message: "E-mail invalido.." });
+    } else {
+      removeError("email");
     }
   }
 
-  function handlePhoneChange(event){
-
-    setPhone(formatPhone(event.target.value))
+  function handlePhoneChange(event) {
+    setPhone(formatPhone(event.target.value));
   }
 
-  function handleSubmit(event){
-    event.preventDefault()
-    console.log({name, email,phone,category})
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log({ name, email, phone, category });
   }
 
-
-  return(
+  return (
     <Form onSubmit={handleSubmit} noValidate>
-      <FormGroup error={getErrorMessageByFieldName('name')}>
+      <FormGroup error={getErrorMessageByFieldName("name")}>
         <Input
           type="text"
           placeholder="Nome *"
-          valeu={name}
+          value={name}
           onChange={handleNameChange}
-          error={getErrorMessageByFieldName('name')}
+          error={getErrorMessageByFieldName("name")}
         />
       </FormGroup>
 
-      <FormGroup error={getErrorMessageByFieldName('email')} >
+      <FormGroup error={getErrorMessageByFieldName("email")}>
         <Input
           type="email"
           placeholder="E-mail"
-          valeu={email}
+          value={email}
           onChange={handleEmailChange}
-          error={getErrorMessageByFieldName('email')}
+          error={getErrorMessageByFieldName("email")}
         />
       </FormGroup>
 
       <FormGroup>
         <Input
-           placeholder="Telefone"
-           value={phone}
-           onChange={handlePhoneChange}
-           maxLength="15"
+          placeholder="Telefone"
+          value={phone}
+          onChange={handlePhoneChange}
+          maxLength="15"
         />
       </FormGroup>
 
-      <FormGroup>
+      <FormGroup isLoading={isLoadingCategories}>
         <Select
-           valeu={category}
-           onChange={(event) => setCategory(event.target.value)}
+          value={category}
+          onChange={handleCategory}
+          error={getErrorMessageByFieldName('category')}
+          disabled={isLoadingCategories}
         >
-          <option value="instagram">Instagram</option>
-          <option value="linkedin">Linkedin</option>
-          <option value="facebook">Facebook</option>
+          <option value=""> Selecione uma Categoria </option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.title}
+            </option>
+          ))}
         </Select>
       </FormGroup>
 
       <ButtonContainer>
-        <Button type="submit" disabled={!isFormValid}> { buttonLabel } </Button>
+        <Button type="submit" disabled={!isFormValid}>
+          {buttonLabel}
+        </Button>
       </ButtonContainer>
     </Form>
-  )
+  );
 }
