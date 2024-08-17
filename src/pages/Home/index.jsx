@@ -7,12 +7,14 @@ import {
   ListContainer,
   ErrorContainer,
   EmptyListContainer,
+  SearchNotFoundContainer,
 } from "./styles";
 import { FiArrowUp, FiTrash2, FiEdit } from "react-icons/fi";
 import { Modal } from "../../components/Modal";
 import { Loader } from "../../components/Loader";
 import emptyBox from "../../assets/images/empty-box.svg";
 import sad from "../../assets/images/sad.svg";
+import magnifierQuestion from "../../assets/images/magnifier-question.svg";
 import { Button } from "../../components/Button";
 import { useContacts } from "../../hooks/useContacts";
 
@@ -23,6 +25,7 @@ export function Home() {
     hasError,
     orderBy,
     filteredContacts,
+    searchContatcts,
     handleSearchContacts,
     handleToggleOrderBy,
     handleTryAgain,
@@ -87,6 +90,17 @@ export function Home() {
                   primeiro!
                 </p>
               </EmptyListContainer>
+            )}
+
+            {contacts.length > 0 && filteredContacts < 1 && (
+              <SearchNotFoundContainer>
+                <img src={magnifierQuestion} alt="Magnifier Question" />
+
+                <span>
+                  Nenhum resultado foi encontrado para{" "}
+                  <strong> "{searchContatcts}" </strong> .
+                </span>
+              </SearchNotFoundContainer>
             )}
 
             {filteredContacts.length > 0 && (

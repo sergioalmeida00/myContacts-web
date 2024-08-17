@@ -181,3 +181,14 @@ export const EmptyListContainer = styled.div`
 
 `
 
+export const SearchNotFoundContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  span {
+    color:  ${({theme}) => theme.COLOR.gray[200]};
+    word-break: break-word;
+  }
+`
+
