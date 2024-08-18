@@ -45,6 +45,20 @@ export function useContacts() {
     loadContacts();
   }
 
+  async function onSubmit(data) {
+    try {
+      const { name, email, phone, category } = data;
+      const responseContacts = await ContactsService.createContact({
+        name,
+        email,
+        phone,
+        category_id: category,
+      });
+    } catch (error) {
+      alert("Ocorreu um erro ao cadastrar o contato!");
+    }
+  }
+
   return {
     contacts,
     orderBy,
@@ -56,5 +70,6 @@ export function useContacts() {
     handleToggleOrderBy,
     handleSearchContacts,
     handleTryAgain,
+    onSubmit,
   };
 }

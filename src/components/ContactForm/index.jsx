@@ -8,6 +8,7 @@ import { isEmailValid } from "../../utils/isEmailValid";
 import { useErrors } from "../../hooks/useErrors";
 import { formatPhone } from "../../utils/formatPhone";
 import { useCategories } from "../../hooks/useCategories";
+import { useContacts } from "../../hooks/useContacts";
 
 export function ContactForm({ buttonLabel }) {
   const [name, setName] = useState("");
@@ -17,6 +18,7 @@ export function ContactForm({ buttonLabel }) {
   const { setError, removeError, getErrorMessageByFieldName, errors } =
     useErrors();
   const { categories,isLoadingCategories } = useCategories();
+  const { onSubmit } = useContacts();
 
   const isFormValid = name && category && errors.length === 0;
 
@@ -54,7 +56,7 @@ export function ContactForm({ buttonLabel }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log({ name, email, phone, category });
+    onSubmit({ name, email, phone, category })
   }
 
   return (
