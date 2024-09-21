@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
   /* width: 100%; */
   padding: 0 1rem;
   height: 3.25rem;
@@ -12,6 +12,9 @@ export const Button = styled.button`
   font-size: 1rem;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
   transition: all 0.2s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover{
     filter: brightness(0.9);
