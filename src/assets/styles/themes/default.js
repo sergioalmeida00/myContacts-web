@@ -23,6 +23,9 @@ export default{
       400: '#2033fa',
       500: '#091be1',
     },
+    success:{
+      main:"#51CA73"
+    },
     purple:"#5061FC",
     purple_400:"#2033fa",
     purple_500:"#091be1",
