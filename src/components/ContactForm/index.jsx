@@ -9,8 +9,10 @@ import { useErrors } from "../../hooks/useErrors";
 import { formatPhone } from "../../utils/formatPhone";
 import { useCategories } from "../../hooks/useCategories";
 import { useContacts } from "../../hooks/useContacts";
+import { forwardRef } from "react";
+import { useImperativeHandle } from "react";
 
-export function ContactForm({ buttonLabel }) {
+const ContactForm = forwardRef(({ buttonLabel }, ref) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -22,6 +24,19 @@ export function ContactForm({ buttonLabel }) {
   const { onSubmit } = useContacts();
 
   const isFormValid = name && category && errors.length === 0;
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      setFieldsValues: (contact) => {
+        setName(contact.name ?? ""),
+          setEmail(contact.email ?? ""),
+          setPhone(formatPhone(contact.phone) ?? ""),
+          setCategory(contact.category_id ?? "");
+      },
+    }),
+    []
+  );
 
   function handleNameChange(event) {
     setName(event.target.value);
@@ -122,4 +137,6 @@ export function ContactForm({ buttonLabel }) {
       </ButtonContainer>
     </Form>
   );
-}
+});
+
+export default ContactForm;

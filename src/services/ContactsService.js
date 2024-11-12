@@ -14,6 +14,10 @@ class ContactsService {
   async createContact(contact) {
     return this.httpClient.post("/contacts", { body: contact });
   }
+
+  async findContactById(id) {
+    return this.httpClient.get(`/contacts/${id}`);
+  }
 }
 
 export default new ContactsService();

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import ContactsService from "../services/ContactsService";
+import toast from "../utils/toast";
 
 export function useContacts() {
   const [contacts, setContacts] = useState([]);
@@ -48,14 +49,22 @@ export function useContacts() {
   async function onSubmit(data) {
     try {
       const { name, email, phone, category } = data;
-      const responseContacts = await ContactsService.createContact({
+      await ContactsService.createContact({
         name,
         email,
         phone,
         category_id: category,
       });
+
+      toast({
+        type: "success",
+        text: "Cadastrado com sucesso!",
+      });
     } catch (error) {
-      alert("Ocorreu um erro ao cadastrar o contato!");
+      toast({
+        type: "danger",
+        text: "Ocorreu um erro ao cadastrar o contato!",
+      });
     }
   }
 
