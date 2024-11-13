@@ -46,7 +46,32 @@ export function useContacts() {
     loadContacts();
   }
 
-  async function onSubmit(data) {
+  async function onSubmitEdit(data) {
+    try {
+      const { name, email, phone, category, id } = data;
+      const contact = await ContactsService.update(id, {
+        name,
+        email,
+        phone,
+        category_id: category,
+      });
+
+      toast({
+        type: "success",
+        text: "Atualizado com sucesso!",
+      });
+
+      //resposta da API
+      return contact[0];
+    } catch (error) {
+      toast({
+        type: "danger",
+        text: "Ocorreu um erro ao atualizar o contato!",
+      });
+    }
+  }
+
+  async function onSubmitCreate(data) {
     try {
       const { name, email, phone, category } = data;
       await ContactsService.createContact({
@@ -79,6 +104,7 @@ export function useContacts() {
     handleToggleOrderBy,
     handleSearchContacts,
     handleTryAgain,
-    onSubmit,
+    onSubmitCreate,
+    onSubmitEdit,
   };
 }

@@ -18,6 +18,10 @@ class ContactsService {
   async findContactById(id) {
     return this.httpClient.get(`/contacts/${id}`);
   }
+
+  async update(id, contact) {
+    return this.httpClient.put(`/contacts/${id}`, { body: contact });
+  }
 }
 
 export default new ContactsService();

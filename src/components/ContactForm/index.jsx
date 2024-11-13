@@ -8,11 +8,10 @@ import { isEmailValid } from "../../utils/isEmailValid";
 import { useErrors } from "../../hooks/useErrors";
 import { formatPhone } from "../../utils/formatPhone";
 import { useCategories } from "../../hooks/useCategories";
-import { useContacts } from "../../hooks/useContacts";
 import { forwardRef } from "react";
 import { useImperativeHandle } from "react";
 
-const ContactForm = forwardRef(({ buttonLabel }, ref) => {
+const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -21,7 +20,6 @@ const ContactForm = forwardRef(({ buttonLabel }, ref) => {
   const { setError, removeError, getErrorMessageByFieldName, errors } =
     useErrors();
   const { categories, isLoadingCategories } = useCategories();
-  const { onSubmit } = useContacts();
 
   const isFormValid = name && category && errors.length === 0;
 
