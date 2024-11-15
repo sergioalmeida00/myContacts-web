@@ -106,5 +106,7 @@ export function useContacts() {
     handleTryAgain,
     onSubmitCreate,
     onSubmitEdit,
+    setIsLoading,
+    setContacts,
   };
 }

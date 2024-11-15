@@ -1,11 +1,16 @@
 import { Spinner } from "../Spinner";
 import { StyledButton } from "./styles";
 
-export function Button({ type, disabled, isLoading, children }) {
+export function Button({ type, disabled, isLoading, children, danger, onClick }) {
   return (
-    <StyledButton type={type} disabled={disabled || isLoading}>
+    <StyledButton
+       type={type}
+       disabled={disabled || isLoading}
+       danger={danger}
+       onClick={onClick}
+    >
       {!isLoading && children}
-      {isLoading && <Spinner size={16}/>}
+      {isLoading && <Spinner size={16} />}
     </StyledButton>
   );
 }

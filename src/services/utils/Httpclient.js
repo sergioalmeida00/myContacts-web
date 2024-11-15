@@ -28,6 +28,14 @@ class Httpclient {
     });
   }
 
+  delete(path, options) {
+    return this.makeRequest(path, {
+      method: "DELETE",
+      body: options?.body,
+      headers: options?.headers,
+    });
+  }
+
   async makeRequest(path, options) {
     await delay(500);
 

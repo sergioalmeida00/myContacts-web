@@ -22,6 +22,10 @@ class ContactsService {
   async update(id, contact) {
     return this.httpClient.put(`/contacts/${id}`, { body: contact });
   }
+
+  async delete(id) {
+    return this.httpClient.delete(`/contacts/${id}`);
+  }
 }
 
 export default new ContactsService();

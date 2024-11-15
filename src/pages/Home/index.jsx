@@ -17,6 +17,9 @@ import sad from "../../assets/images/sad.svg";
 import magnifierQuestion from "../../assets/images/magnifier-question.svg";
 import { Button } from "../../components/Button";
 import { useContacts } from "../../hooks/useContacts";
+import { useState } from "react";
+import ContactsService from "../../services/ContactsService";
+import toast from "../../utils/toast";
 
 export function Home() {
   const {
@@ -29,11 +32,64 @@ export function Home() {
     handleSearchContacts,
     handleToggleOrderBy,
     handleTryAgain,
+    setContacts,
   } = useContacts();
+
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
+  const [isLoadingDeleteContact, setIsLoadingDeleteContact] = useState(false);
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalVisible(false);
+    setContactBeingDeleted(null);
+  }
+
+  function handleDeleteContact(contact) {
+    setContactBeingDeleted(contact);
+    setIsDeleteModalVisible(true);
+  }
+
+  async function handleConfirmDeleteContact() {
+    try {
+      setIsLoadingDeleteContact(true);
+
+      await ContactsService.delete(contactBeingDeleted.id);
+
+      handleCloseDeleteModal();
+
+      setContacts((prevState) =>
+        prevState.filter((contact) => contact.id !== contactBeingDeleted.id)
+      );
+
+      toast({
+        type: "success",
+        text: "Deletado com sucesso!",
+      });
+    } catch {
+      toast({
+        type: "danger",
+        text: "Ocorreu um erro ao deletar o contato!",
+      });
+    } finally {
+      setIsLoadingDeleteContact(false);
+    }
+  }
 
   return (
     <Container>
       <Loader isLoading={isLoading} />
+
+      <Modal
+        danger
+        title={`Tem certeza que deseja remover o contato "${contactBeingDeleted?.name}" ?`}
+        confirmLabel="Deletar"
+        visible={isDeleteModalVisible}
+        isLoading={isLoadingDeleteContact}
+        onCancel={handleCloseDeleteModal}
+        onConfirm={handleConfirmDeleteContact}
+      >
+        <p>Esta ação não poderá ser desfeita!</p>
+      </Modal>
 
       {!hasError && contacts.length > 0 && (
         <InputSearchContainer>
@@ -130,7 +186,7 @@ export function Home() {
                   <Link to={`/edit/${contact.id}`}>
                     <FiEdit />
                   </Link>
-                  <button>
+                  <button onClick={() => handleDeleteContact(contact)}>
                     <FiTrash2 />
                   </button>
                 </div>

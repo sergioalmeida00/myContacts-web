@@ -27,6 +27,9 @@ export const Container = styled.div`
 
     color: ${({theme,danger}) => (danger ? theme.COLOR.danger[300] : theme.COLOR.gray[900] )};
   }
+  .modal-body{
+    margin-top: 3rem;
+  }
 `
 
 export const Footer = styled.footer`
@@ -34,7 +37,7 @@ export const Footer = styled.footer`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: 2rem;
 
   .cancel-button{
     background: transparent;
